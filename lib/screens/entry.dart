@@ -194,7 +194,15 @@ class MyEntryBottom extends StatelessWidget {
             builder: (context, data, child) {
               return IconButton(
                 icon: Icon(Icons.save),
-                onPressed: () => data.saveEntry(entry.id),
+                onPressed: () => data.saveEntry(entry.id)
+                  .then((x) {
+                    ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Saved!')));
+                  })
+                  .catchError((e) {
+                    ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('An error occured!\n$e')));
+                  }),
               );
             },
           ),
